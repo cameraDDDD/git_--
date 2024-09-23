@@ -1,10 +1,10 @@
 from datetime import datetime
 from pathlib import Path
 import json
-wallet = Path("V:/camera/文档/钱包.json")#获取钱包路径
-#py_dict = {'amount':394.74}初始化
-#dic = json.dumps(py_dict)
-#wallet.write_text(dic)
+wallet = Path("C:/Users/kevin/Desktop/git_记账/钱包.json")#获取钱包路径
+py_dict = {'amount':319.34+788.36}#初始化
+dic = json.dumps(py_dict)
+wallet.write_text(dic)
 today_date=datetime.today().date()#获取日期
 str_date=today_date.strftime("%Y/%m/%d")
 json_dict = wallet.read_text()#获取json字典
