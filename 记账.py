@@ -1,13 +1,23 @@
+"""注意!!!!!!"""
+print("注意!!!!!!!\n用完一定要按0")
 from datetime import datetime
 from pathlib import Path
 import json
 wallet = Path("C:/Users/kevin/Desktop/git_记账/钱包.json")#获取钱包路径
-#py_dict = {'amount':319.34+788.36}#初始化
+#py_dict = {'amount':493.41+148.94}#初始化
 #dic = json.dumps(py_dict)
 #wallet.write_text(dic)
 today_date=datetime.today().date()#获取日期
+current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+update_path = Path("C:/Users/kevin/Desktop/git_记账/更新记录.json")
+json_list = update_path.read_text(encoding='UTF-8')
+py_list = json.loads(json_list)
+py_list.append(current_time)
+json_list = json.dumps(py_list)
+
+print(current_time)
 str_date=today_date.strftime("%Y/%m/%d")
-json_dict = wallet.read_text()#获取json字典
+json_dict = wallet.read_text(encoding='UTF-8')#获取json字典
 py_dict = json.loads(json_dict)#转换成python字典
 py_dict['amount'] = py_dict.get("amount","字典有误")#获取余额,####
 if py_dict.get(str_date)==None:
@@ -18,6 +28,7 @@ def c_amount():
     return am
 while True:#主循环
     print("--------记账--------")
+    print(f"                ------上次更新时间为{py_list[-2]}")
     print("写入并退出 请按'0'")
     print("支出 请按'1'")
     print("收入 请按'2'")
@@ -50,5 +61,5 @@ while True:#主循环
 
 
 json_dict = json.dumps(py_dict,ensure_ascii=False)
-wallet.write_text(json_dict)
-    
+wallet.write_text(json_dict,encoding='UTF-8')
+update_path.write_text(json_list)    
