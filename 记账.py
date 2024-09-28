@@ -26,6 +26,12 @@ def c_amount():#一个查询函数
     am=py_dict['amount']
     print(f"余额为{am:.2f}元")
     return am
+def record():#一个写入函数
+    json_dict = json.dumps(py_dict,ensure_ascii=False)
+    wallet.write_text(json_dict,encoding='UTF-8')
+
+
+
 while True:#主循环
     print("--------记账--------")
     print(f"                ------上次更新时间为{py_list[-2]}")
@@ -43,8 +49,8 @@ while True:#主循环
             expend_m=float(input("支出金额:"))
             py_dict["amount"]=py_dict['amount']-expend_m
             py_dict[str_date][expend_th]=-expend_m###支出存储为负数
+            record()
             c_amount()
-        
         except ValueError:
             print("输入数字!")
     if choice=='2':
@@ -53,6 +59,7 @@ while True:#主循环
             income_m=float(input("收入金额:"))
             py_dict["amount"]=py_dict['amount']+income_m
             py_dict[str_date][income_th]=income_m
+            record()
             c_amount()
         except ValueError:
             print("输入数字!!")    
@@ -61,6 +68,4 @@ while True:#主循环
 
 
 
-json_dict = json.dumps(py_dict,ensure_ascii=False)
-wallet.write_text(json_dict,encoding='UTF-8')
 update_path.write_text(json_list)    
